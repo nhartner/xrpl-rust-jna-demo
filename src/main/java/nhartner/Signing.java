@@ -15,6 +15,9 @@ public class Signing {
         Pointer ed25519_new(String value);
         String ed25519_sign(Pointer algo, String message);
         boolean ed25519_verify(Pointer algo, String message, String signature);
+
+        void ed25519_free_signature(String signature);
+        void ed25519_free(Pointer algo);
     }
 
     public static void main(String[] args) {
@@ -23,5 +26,8 @@ public class Signing {
         System.out.println(signature);
         boolean verify = CSigning.INSTANCE.ed25519_verify(ed25519, "test message", signature);
         System.out.println(verify);
+
+        CSigning.INSTANCE.ed25519_free_signature(signature);
+        CSigning.INSTANCE.ed25519_free(ed25519);
     }
 }
