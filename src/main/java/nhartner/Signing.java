@@ -1,4 +1,4 @@
-package com.ripple.xrpl.rust.demo;
+package nhartner;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 public class Signing {
     public interface CSigning extends Library {
-        Path signingLibPath = Paths.get(Main.class.getClassLoader().getResource("libsigning_lib_rs.dylib").getPath());
+        Path signingLibPath = Paths.get(Signing.class.getClassLoader().getResource("libsigning_lib_rs.dylib").getPath());
         CSigning INSTANCE = Native.load(signingLibPath.toString(), CSigning.class);
         Pointer ed25519_new(String value);
         String ed25519_sign(Pointer algo, String message);
