@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 public class Signing {
     public interface CSigning extends Library {
-        Path signingLibPath = Paths.get(Signing.class.getClassLoader().getResource("libsigning_lib_rs.dylib").getPath());
+        Path signingLibPath = Paths.get(Signing.class.getClassLoader().getResource(getNativeLibraryName()).getPath());
         CSigning INSTANCE = Native.load(signingLibPath.toString(), CSigning.class);
         Pointer ed25519_new(String value);
         String ed25519_sign(Pointer algo, String message);
@@ -29,5 +29,16 @@ public class Signing {
 
         CSigning.INSTANCE.ed25519_free_signature(signature);
         CSigning.INSTANCE.ed25519_free(ed25519);
+    }
+
+    private static String getNativeLibraryName() {
+        String OS = System.getProperty("os.name").toLowerCase();
+        if (OS.contains("mac")) {
+            return "libsigning_lib_rs.dylib";
+        }
+        if (OS.contains("nux")) {
+            return "libsigning_lib_rs.so";
+        }
+        else throw new UnsupportedOperationException(OS + " is not a supported OS");
     }
 }
