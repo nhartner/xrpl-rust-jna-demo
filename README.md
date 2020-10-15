@@ -22,8 +22,7 @@ The XRPL Signing Library is stored in `src/main/resources` and is compiled from 
 To update the signing library, checkout that project and run:
 
 ```
-cargo build
-cargo package
+cargo build --release
 ``` 
 
-Then copy `./target/debug/libsigning_lib_rs.dylib` to `src/main/resources` in this project.
+Then copy `./target/release/libsigning_lib_rs.dylib` to `src/main/resources` in this project.
